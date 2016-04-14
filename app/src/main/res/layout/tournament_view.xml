@@ -1,73 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alignmentMode="alignMargins">
+        android:layout_height="240dp">
 
-        <TextView
-            android:id="@+id/club"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:textSize="10pt" />
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/open_cupassist"
-            android:src="@drawable/external_link_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/club"
-            android:text="@string/open_cupassist"
-            android:background="@null"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize">
 
-        <TextView
-            android:id="@+id/start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="10pt"
-            android:layout_marginRight="5dp" />
+                <TextView
+                    android:id="@+id/club"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="10pt" />
 
-        <Spinner
-            android:id="@+id/clazz_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/club" />
+                <ImageButton
+                    android:id="@+id/open_cupassist"
+                    android:src="@drawable/external_link_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/club"
+                    android:text="@string/open_cupassist"
+                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp" />
 
-        <TextView
-            android:id="@+id/teams_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/club"
-            android:layout_alignParentRight="true"
-            android:textSize="8pt"
-            android:layout_marginRight="5dp" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="10pt"
+                    android:layout_marginRight="5dp" />
 
+                <Spinner
+                    android:id="@+id/clazz_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/club" />
 
-    <LinearLayout
-        android:id="@+id/progressContainer"
+                <TextView
+                    android:id="@+id/teams_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/club"
+                    android:layout_alignParentRight="true"
+                    android:textSize="8pt"
+                    android:layout_marginRight="5dp" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+                <!--
+                    <android.support.design.widget.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        -->
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/teamList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/progressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- TODO: Replace with RecyclerView that implemnts NestedScrollingChild -->
+            <ListView
+                android:id="@+id/teamList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

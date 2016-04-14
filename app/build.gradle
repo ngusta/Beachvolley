@@ -29,7 +29,13 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '23.1.1'
+}
+
 dependencies {
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.firebase:firebase-client-android:2.5.2+'
