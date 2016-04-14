@@ -4,18 +4,20 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.ngusta.beachvolley.domain.Team;
+import com.ngusta.beachvolley.domain.Tournament;
 import com.ngusta.cupassist.R;
 import com.ngusta.cupassist.adapters.TeamAdapter;
 import com.ngusta.cupassist.adapters.TournamentListAdapter;
-import com.ngusta.beachvolley.domain.Tournament;
 import com.ngusta.cupassist.io.TournamentListDownloader;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,9 +32,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TournamentActivity extends Activity {
+public class TournamentActivity extends AppCompatActivity {
 
     public static final String TOURNAMENT_INTENT = "tournament";
+
+    private Toolbar mToolbar;
 
     private View mProgressContainer;
 
@@ -56,6 +60,8 @@ public class TournamentActivity extends Activity {
         setContentView(R.layout.tournament_view);
         mTournament = (Tournament) getIntent().getSerializableExtra(TOURNAMENT_INTENT);
         mProgressContainer = findViewById(R.id.progressContainer);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         mTeamList = findViewById(R.id.teamList);
         mTeamList.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
@@ -134,9 +140,14 @@ public class TournamentActivity extends Activity {
     }
 
     private void initInfo() {
-        getActionBar().setTitle(mTournament.getName());
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(
-                TournamentListAdapter.getLevelIndicatorResource(mTournament))));
+        ActionBar appBar = getSupportActionBar();
+
+        if (appBar != null) {
+            appBar.setTitle(mTournament.getName());
+            appBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(
+                    TournamentListAdapter.getLevelIndicatorResource(mTournament))));
+        }
+
         ((TextView) findViewById(R.id.club)).setText(mTournament.getClub());
         ((TextView) findViewById(R.id.start_date)).setText(mTournament.getFormattedStartDate());
     }

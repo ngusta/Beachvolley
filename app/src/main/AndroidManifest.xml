@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".activity.TournamentActivity"
             android:parentActivityName=".activity.TournamentListActivity"
             android:screenOrientation="nosensor" />
