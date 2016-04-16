@@ -17,6 +17,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -40,7 +42,7 @@ public class TournamentActivity extends AppCompatActivity {
 
     private View mProgressContainer;
 
-    private View mTeamList;
+    private RecyclerView mTeamList;
 
     private boolean mListShown;
 
@@ -62,7 +64,10 @@ public class TournamentActivity extends AppCompatActivity {
         mProgressContainer = findViewById(R.id.progressContainer);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mTeamList = findViewById(R.id.teamList);
+        mTeamList = (RecyclerView) findViewById(R.id.teamList);
+        mTeamList.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mTeamList.setLayoutManager(linearLayoutManager);
         mTeamList.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
@@ -190,10 +195,9 @@ public class TournamentActivity extends AppCompatActivity {
     }
 
     private void updateTeams(Tournament.TournamentClazz clazz) {
-        ListView teamListView = (ListView) findViewById(R.id.teamList);
         List<Tournament.TeamGroupPosition> teams = mTournament.getTeamGroupPositionsForClazz(clazz);
-        final ArrayAdapter<Tournament.TeamGroupPosition> adapter = new TeamAdapter(this, R.layout.team_list_item, teams, clazz.getMaxNumberOfTeams());
-        teamListView.setAdapter(adapter);
+        TeamAdapter teamAdapter = new TeamAdapter(teams, clazz.getMaxNumberOfTeams());
+        mTeamList.setAdapter(teamAdapter);
     }
 
     private class OnSwipeTouchListener implements View.OnTouchListener {

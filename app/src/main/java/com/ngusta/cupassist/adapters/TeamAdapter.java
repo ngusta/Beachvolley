@@ -1,56 +1,38 @@
 package com.ngusta.cupassist.adapters;
 
-import com.ngusta.cupassist.R;
 import com.ngusta.beachvolley.domain.Tournament;
+import com.ngusta.cupassist.R;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class TeamAdapter extends ArrayAdapter<Tournament.TeamGroupPosition> {
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamHolder> {
 
     private final List<Tournament.TeamGroupPosition> teams;
 
-    private final int resource;
-
     private final int maxNumberOfTeams;
 
-    public TeamAdapter(Context context, int resource, List<Tournament.TeamGroupPosition> teams, int maxNumberOfTeams) {
-        super(context, resource, teams);
-        this.resource = resource;
+    public TeamAdapter(List<Tournament.TeamGroupPosition> teams, int maxNumberOfTeams) {
         this.teams = teams;
         this.maxNumberOfTeams = maxNumberOfTeams;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-        TeamHolder holder;
+    public TeamHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_list_item, parent, false);
+        return new TeamHolder(v);
+    }
 
-        if (row == null) {
-            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
-            row = inflater.inflate(resource, parent, false);
-
-            holder = new TeamHolder();
-            holder.team = (RelativeLayout) row.findViewById(R.id.team);
-            holder.group = (TextView) row.findViewById(R.id.group);
-            holder.playerAName = (TextView) row.findViewById(R.id.playerA_name);
-            holder.playerBName = (TextView) row.findViewById(R.id.playerB_name);
-            holder.entryPoints = (TextView) row.findViewById(R.id.entry_points);
-
-            row.setTag(holder);
-        } else {
-            holder = (TeamHolder) row.getTag();
-        }
-
+    @Override
+    public void onBindViewHolder(TeamHolder holder, int position) {
         Tournament.TeamGroupPosition team = teams.get(position);
         if (team.team.hasPaid()) {
             holder.team.setBackgroundColor(0x2000c800);
@@ -64,20 +46,29 @@ public class TeamAdapter extends ArrayAdapter<Tournament.TeamGroupPosition> {
         }
         holder.playerAName.setText(team.team.getPlayerA().getName());
         holder.playerBName.setText(team.team.getPlayerB().getName());
-        holder.entryPoints.setText(team.team.getEntryPoints() + " pts");
-        return row;
+        holder.entryPoints.setText(String.valueOf(team.team.getEntryPoints()));
     }
 
-    static class TeamHolder {
+    @Override
+    public int getItemCount() {
+        return teams.size();
+    }
+
+    public class TeamHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout team;
-
         TextView group;
-
         TextView playerAName;
-
         TextView playerBName;
-
         TextView entryPoints;
+
+        public TeamHolder(View itemView) {
+            super(itemView);
+            team = (RelativeLayout) itemView.findViewById(R.id.team);
+            group = (TextView) itemView.findViewById(R.id.group);
+            playerAName = (TextView) itemView.findViewById(R.id.playerA_name);
+            playerBName = (TextView) itemView.findViewById(R.id.playerB_name);
+            entryPoints = (TextView) itemView.findViewById(R.id.entry_points);
+        }
     }
 }

@@ -97,8 +97,8 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <!-- TODO: Replace with RecyclerView that implemnts NestedScrollingChild -->
-            <ListView
+            <!-- TODO: Make the RecylcerView implement NestedScrollingChild -->
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/teamList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

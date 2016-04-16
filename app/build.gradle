@@ -34,6 +34,7 @@ ext {
 }
 
 dependencies {
+    compile 'com.android.support:recyclerview-v7:+'
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
     compile 'org.jsoup:jsoup:1.7.3'
